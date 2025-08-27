@@ -3,167 +3,563 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Glowing Tulips in Pink Glass Box</title>
+  <title>For My Love 💖</title>
   <style>
     body {
-      background: radial-gradient(circle at center, #ffe6f0, #ffcce0);
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #ffd6e8, #fff5f8);
+      text-align: center;
+      color: #444;
+      overflow-x: hidden;
+    }
+    .section {
+      min-height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      perspective: 1200px;
-      font-family: sans-serif;
+      padding: 20px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s ease forwards;
+    }
+    h1, h2, p {
+      margin: 10px 0;
+    }
+    button {
+      background: #ff85a2;
+      border: none;
+      padding: 15px 25px;
+      font-size: 18px;
+      color: white;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+      width: 80%;
+      max-width: 250px;
+      transition: transform 0.2s ease;
+    }
+    button:hover, button:active {
+      transform: scale(1.08);
+      background: #ff4c78;
+    }
+    .hidden { display: none; }
+    .her-photo {
+      width: 220px;
+      max-width: 80%;
+      border-radius: 20px;
+      margin: 15px 0;
+      opacity: 0;
+      transform: translateX(30px);
+      transition: all 0.6s ease;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+    }
+    .her-photo.show {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .her-photo.hide {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    .reveal {
+      background: #fff;
+      border-radius: 20px;
+      padding: 25px;
+      max-width: 800px;
+      margin: 0 10px;
+      box-shadow: 0px 0px 12px rgba(0,0,0,0.15);
     }
 
-    .scene {
-      width: 350px;
-      height: 350px;
-      position: relative;
-      transform-style: preserve-3d;
-      animation: spin 25s linear infinite;
+    /* --- New Styles for Glass Box and Tulips --- */
+    .glass-box-container {
+      width: 200px; /* Width of the entire 3D scene container */
+      height: 200px; /* Height of the entire 3D scene container */
+      perspective: 800px; /* Adds 3D perspective depth */
+      margin: 40px auto 20px auto; /* Position below gallery */
+      position: relative; /* For z-index if needed */
+      z-index: 10; /* Ensure it's above other elements if overlaps */
     }
 
-    @keyframes spin {
-      0% { transform: rotateY(0deg); }
-      100% { transform: rotateY(360deg); }
-    }
-
-    /* Pink Glass Box Faces */
-    .face {
-      position: absolute;
-      width: 350px;
-      height: 350px;
-      background: rgba(255, 182, 193, 0.25); /* soft pink glass */
-      border: 2px solid rgba(255, 182, 193, 0.5);
-      backdrop-filter: blur(6px);
-      transform-style: preserve-3d;
-    }
-
-    .front  { transform: translateZ(175px); }
-    .back   { transform: rotateY(180deg) translateZ(175px); }
-    .right  { transform: rotateY(90deg) translateZ(175px); }
-    .left   { transform: rotateY(-90deg) translateZ(175px); }
-    .top    { transform: rotateX(90deg) translateZ(175px); }
-    .bottom { transform: rotateX(-90deg) translateZ(175px); }
-
-    /* Tulips Group */
-    .tulips {
-      position: absolute;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
+    .glass-box {
       width: 100%;
       height: 100%;
-      transform-style: preserve-3d;
+      position: relative;
+      transform-style: preserve-3d; /* Children participate in 3D scene */
+      animation: rotateBox 15s infinite linear; /* Horizontal rotation animation */
     }
 
-    .tulip {
+    @keyframes rotateBox {
+      from { transform: rotateY(0deg); }
+      to { transform: rotateY(360deg); }
+    }
+
+    .face {
       position: absolute;
-      width: 6px;
-      height: 80px;
-      background: green;
-      border-radius: 3px;
-      transform-origin: bottom center;
-      animation: sway 3s ease-in-out infinite alternate;
+      width: 200px; /* Size of each face */
+      height: 200px; /* Size of each face */
+      background: rgba(255, 255, 255, 0.4); /* Increased transparency for better visibility */
+      border: 1px solid rgba(255, 192, 203, 0.8); /* Stronger border for definition */
+      box-shadow: 0 0 10px rgba(255, 192, 203, 0.3); /* Soft shadow for depth */
+      box-sizing: border-box; /* Include padding and border in width/height */
+      display: flex; /* For centering content within faces */
+      justify-content: center;
+      align-items: center;
+      backface-visibility: hidden; /* Hide back faces when looking through */
     }
 
-    .tulip::after {
-      content: "";
-      position: absolute;
-      top: -25px;
-      left: -10px;
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      background: pink;
-      box-shadow: 0 0 15px rgba(255, 150, 200, 0.8),
-                  0 0 30px rgba(255, 100, 200, 0.5);
-      filter: blur(1px);
+    /* Positioning each face for a 200px cube centered at origin */
+    /* translateZ(100px) moves each face +/- half the cube's dimension along its local Z-axis */
+    .face.front { transform: rotateY(0deg) translateZ(100px); }
+    .face.back { transform: rotateY(180deg) translateZ(100px); }
+    .face.left { transform: rotateY(-90deg) translateZ(100px); }
+    .face.right { transform: rotateY(90deg) translateZ(100px); }
+    .face.top { transform: rotateX(90deg) translateZ(100px); }
+    .face.bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+    .tulip-field {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-wrap: wrap; /* Allow tulips to wrap into a grid */
+      justify-content: center;
+      align-content: center; /* Vertically center content if there are fewer rows */
+      gap: 8px; /* Spacing between tulips */
+      padding: 10px;
+      box-sizing: border-box;
+      /* Background for the "field" itself */
+      background: radial-gradient(circle at center, #f0f0f0 0%, #d8d8d8 100%);
+      border-radius: 10px; /* Soften corners of the field area */
+      overflow: hidden; /* Hide any overflow */
     }
 
-    /* Swaying animation */
-    @keyframes sway {
-      from { transform: rotateZ(-4deg); }
-      to   { transform: rotateZ(4deg); }
+    .tulip-emoji {
+      font-size: 28px; /* Size of the tulip emojis */
+      /* Glowing effect using text-shadow */
+      text-shadow: 0 0 8px #ff85a2, /* Pink glow */
+                   0 0 15px #ff4c78; /* Stronger pink glow */
+      animation: pulseGlow 2s infinite alternate; /* Gentle pulsing glow */
+      user-select: none; /* Prevent selection of emojis */
     }
+
+    @keyframes pulseGlow {
+      from { text-shadow: 0 0 8px #ff85a2, 0 0 15px #ff4c78; }
+      to { text-shadow: 0 0 12px #ff85a2, 0 0 20px #ff4c78; }
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .gallery img {
+      width: 100%;
+      border-radius: 15px;
+      box-shadow: 0px 3px 6px rgba(0,0,0,0.2);
+      transform: scale(0);
+      animation: popIn 0.6s ease forwards;
+    }
+    .gallery img:nth-child(1) { animation-delay: 0.2s; }
+    .gallery img:nth-child(2) { animation-delay: 0.4s; }
+    .gallery img:nth-child(3) { animation-delay: 0.6s; }
+    .gallery img:nth-child(4) { animation-delay: 0.8s; }
+    .emoji-decor {
+      font-size: 30px;
+      margin: 5px;
+      animation: bounce 2s infinite;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0);} }
+    @keyframes popIn { to { transform: scale(1);} }
+    @keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);} }
   </style>
 </head>
 <body>
-  <div class="scene">
-    <!-- Glass box faces -->
-    <div class="face front"></div>
-    <div class="face back"></div>
-    <div class="face right"></div>
-    <div class="face left"></div>
-    <div class="face top"></div>
-    <div class="face bottom"></div>
 
-    <!-- Tulips inside -->
-    <div class="tulips" id="tulipField"></div>
+  <!-- Intro -->
+  <div id="intro" class="section">
+    <img src="images/colai.PNG" class="her-photo show" id="photo-intro" alt="Her Photo">
+    <h1>Hi crush :></h1>
+    <p>Scan complete ✅ <br>Welcome to your surprise adventure!</p>
+    <div class="emoji-decor">🌷🌹🍦🍟🏸</div>
+    <button onclick="nextWithPhoto('story1','photo-story1')">Start</button>
+  </div>
+
+  <!-- Story 1 -->
+  <div id="story1" class="section hidden">
+    <img src="images/badminton.jpg" class="her-photo" id="photo-story1" alt="Her Photo">
+    <h2>🏸 My Badminton Queen</h2>
+    <p>Sa badminton, importante ang timing. Buti na lang dumating ka rin sa tamang oras ng buhay ko <3 </p>
+    <button onclick="nextWithPhoto('story2','photo-story2')">Next</button>
+  </div>
+
+  <!-- Story 2 -->
+  <div id="story2" class="section hidden">
+    <img src="images/nguso.jpg" class="her-photo" id="photo-story2" alt="Her Photo">
+    <h2>🌷 Rank 1 sa acads, pati sa puso ko</h2>
+    <p>So sipag always. Sana mahawa ako kahit onti hashaha 🌸</p>
+    <button onclick="nextWithPhoto('story3','photo-story3')">Next</button>
+  </div>
+
+  <!-- Story 3 -->
+  <div id="story3" class="section hidden">
+    <img src="images/throwback-1.jpg" class="her-photo" id="photo-story3" alt="Her Photo">
+    <h2>🍦 Ihh ang bangis!</h2>
+    <p>Sobrang ganda lang since birth 🐝</p>
+    <button onclick="showSection('box')">Continue</button>
+  </div>
+
+  <!-- Badminton Game -->
+  <div id="box" class="section hidden">
+    <h2>🏸 Badminton Challenge!</h2>
+    <p>Drag your racket & score 3 points with smashes to unlock 🎁</p>
+    
+    <canvas id="gameCanvas" width="320" height="450" 
+            style="background:#fff;border:2px solid #ff85a2;border-radius:12px;touch-action:none;"></canvas>
+    <p id="gameMessage" style="margin-top:10px;color:#ff4c78;font-weight:bold;"></p>
+  </div>
+
+  <!-- Reveal with Photo Gallery -->
+  <div id="reveal" class="section hidden">
+    <div class="reveal">
+      <h2>Surprise! 💖</h2>
+      <p style="font-size:18px;">Here’s a little gallery of “us” 📸💌</p>
+      <div class="gallery">
+        <img src="photo1.jpg" alt="Memory 1">
+        <img src="photo2.jpg" alt="Memory 2">
+        <img src="photo3.jpg" alt="Memory 3">
+        <img src="photo4.jpg" alt="Memory 4">
+      </div>
+      <p style="margin-top:20px;">✨ Just like the real gray box you’ll open, this one is filled with love (and tulips 🌷 + lights) ✨</p>
+
+      <!-- NEW CONTENT FOR GLASS BOX AND TULIPS -->
+      <div class="glass-box-container">
+        <div class="glass-box">
+          <div class="face front"></div>
+          <div class="face back"></div>
+          <div class="face left"></div>
+          <div class="face right"></div>
+          <div class="face top"></div>
+          <div class="face bottom">
+            <div class="tulip-field">
+              <span class="tulip-emoji">🌷</span>
+              <span class="tulip-emoji">🌸</span>
+              <span class="tulip-emoji">🌷</span>
+              <span class="tulip-emoji">🌹</span>
+              <span class="tulip-emoji">🌷</span>
+              <span class="tulip-emoji">🌸</span>
+              <span class="tulip-emoji">🌹</span>
+              <span class="tulip-emoji">🌷</span>
+              <span class="tulip-emoji">🌸</span>
+              <span class="tulip-emoji">🌹</span>
+              <span class="tulip-emoji">🌷</span>
+              <span class="tulip-emoji">🌸</span>
+              <span class="tulip-emoji">🌷</span>
+              <span class="tulip-emoji">🌹</span>
+              <span class="tulip-emoji">🌸</span>
+              <span class="tulip-emoji">🌷</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    const tulipField = document.getElementById("tulipField");
-
-    const colors = [
-      "rgba(255, 182, 193, 1)", // pink
-      "rgba(255, 255, 200, 1)", // yellow
-      "rgba(200, 150, 255, 1)", // purple
-      "rgba(255, 255, 255, 1)"  // white
-    ];
-
-    // Create 60 glowing tulips randomly inside the box
-    for (let i = 0; i < 60; i++) {
-      const tulip = document.createElement("div");
-      tulip.classList.add("tulip");
-
-      tulip.style.left = `${Math.random() * 300 + 20}px`;
-      tulip.style.bottom = `${20 + Math.random() * 50}px`;
-
-      // Glow color
-      const flower = document.createElement("style");
-      const color = colors[Math.floor(Math.random() * colors.length)];
-      tulip.style.setProperty("--glow-color", color);
-
-      // Override flower color & glow
-      tulip.style.setProperty("--flower-color", color);
-      tulip.style.animationDelay = `${Math.random() * 2}s`;
-      tulip.style.animationDuration = `${2.5 + Math.random()}s`;
-
-      // Customize flower head
-      tulip.style.setProperty("--flower-color", color);
-      tulipField.appendChild(tulip);
-
-      // Update its ::after with random glow color
-      const flowerHead = document.createElement("style");
-      tulip.dataset.color = color;
-      tulip.style.setProperty("--flower-color", color);
-
-      // Inject glow via CSS variable
-      tulip.addEventListener("mouseenter", () => {
-        tulip.style.transform = "scale(1.2)";
-      });
-      tulip.addEventListener("mouseleave", () => {
-        tulip.style.transform = "scale(1)";
-      });
-
-      // Apply to ::after
-      tulip.style.setProperty("--flower-shadow",
-        `0 0 15px ${color}, 0 0 30px ${color}`);
-      tulip.style.setProperty("--flower-color", color);
-
-      tulip.style.setProperty("position", "absolute");
-      tulip.style.setProperty("height", "80px");
-      tulip.style.setProperty("width", "6px");
-
-      // Change ::after dynamically
-      tulip.style.setProperty("content", "''");
-      tulip.style.setProperty("display", "block");
-      tulip.style.setProperty("border-radius", "50%");
-      tulip.style.setProperty("background", color);
-      tulip.style.setProperty("box-shadow", `0 0 15px ${color}, 0 0 30px ${color}`);
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.add('hidden'));
+      const section = document.getElementById(id);
+      section.classList.remove('hidden');
+      section.style.opacity = "0";
+      section.style.transform = "translateY(30px)";
+      setTimeout(() => { section.style.animation = "fadeUp 0.8s ease forwards"; }, 50);
+      const img = section.querySelector('.her-photo');
+      if(img) { setTimeout(()=>img.classList.add('show'),200); }
     }
+
+    function nextWithPhoto(nextSection, nextPhotoId) {
+      const currentPhoto = document.querySelector('.her-photo.show');
+      if(currentPhoto){
+        currentPhoto.classList.remove('show');
+        currentPhoto.classList.add('hide');
+      }
+      setTimeout(() => {
+        showSection(nextSection);
+        const nextPhoto = document.getElementById(nextPhotoId);
+        if(nextPhoto) { nextPhoto.classList.add('show'); }
+      }, 500);
+    }
+
+    // ================== Badminton Game ==================
+    let canvas = document.getElementById("gameCanvas");
+    let ctx = canvas.getContext("2d");
+
+    let netY = canvas.height/2;
+    // Player/opponent racket definitions (w,h are for the visible racket head)
+    let player = { x: canvas.width/2 - 35, y: canvas.height - 70, w: 70, h: 40 }; 
+    let opponent = { x: canvas.width/2 - 35, y: 30, w: 70, h: 40 }; 
+
+    let shuttle = { 
+        x: 0, y: 0, r: 8, // x, y on court plane, r is radius
+        dx: 0, dy: 0, // speeds in x, y
+        gravity: 0.15, // gravity effect (will be used to simulate arc in 2D)
+        airResistance: 0.99, // Adjusted for faster feel and less overshooting
+        dir: 1, // 1 for down (towards player), -1 for up (towards opponent)
+        lastHitBy: null // 1 for player, -1 for opponent
+    };
+
+    let rally = false;
+    let score = 0;
+    let opponentScore = 0;
+    let smashPoints = 0; // Initialize smash points for the game
+
+    // Court boundaries constants
+    const COURT_LEFT_X = 20;
+    const COURT_RIGHT_X = canvas.width - 20;
+    const COURT_TOP_Y = 20; // Opponent's backline
+    const COURT_BOTTOM_Y = canvas.height - 20; // Player's backline
+
+    // Speed limits to prevent shuttle from flying too far/fast
+    const MAX_SHUTTLE_SPEED = 12; 
+    const MAX_SHUTTLE_DY_BASE = 15; // Max vertical speed base before gravity
+
+    // Touch control for player
+    canvas.addEventListener("touchmove", function(e) {
+      e.preventDefault(); // Prevent scrolling
+      let rect = canvas.getBoundingClientRect();
+      let touchX = e.touches[0].clientX - rect.left;
+      player.x = touchX - player.w/2;
+      if (player.x < COURT_LEFT_X) player.x = COURT_LEFT_X;
+      if (player.x > COURT_RIGHT_X - player.w) player.x = COURT_RIGHT_X - player.w;
+    });
+
+    // Mouse control for player (useful for testing on desktop)
+    canvas.addEventListener("mousemove", function(e) {
+      let rect = canvas.getBoundingClientRect();
+      let mouseX = e.clientX - rect.left;
+      player.x = mouseX - player.w/2;
+      if (player.x < COURT_LEFT_X) player.x = COURT_LEFT_X;
+      if (player.x > COURT_RIGHT_X - player.w) player.x = COURT_RIGHT_X - player.w;
+    });
+
+    function drawCourt() {
+      // Main court lines (clearer boundary for game area)
+      ctx.strokeStyle = "#999"; 
+      ctx.lineWidth = 3;
+      ctx.strokeRect(COURT_LEFT_X, COURT_TOP_Y, COURT_RIGHT_X - COURT_LEFT_X, COURT_BOTTOM_Y - COURT_TOP_Y);
+
+      // Net posts
+      ctx.fillStyle = "#666";
+      ctx.fillRect(COURT_LEFT_X - 5, netY - 10, 5, 20); 
+      ctx.fillRect(COURT_RIGHT_X, netY - 10, 5, 20); 
+
+      // Net itself (top line)
+      ctx.strokeStyle = "#ff85a2"; 
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(COURT_LEFT_X, netY);
+      ctx.lineTo(COURT_RIGHT_X, netY);
+      ctx.stroke();
+
+      // Net mesh (vertical lines)
+      ctx.strokeStyle = "rgba(255,133,162,0.5)"; 
+      ctx.lineWidth = 1;
+      for(let i = COURT_LEFT_X; i < COURT_RIGHT_X; i+=10) {
+          ctx.beginPath();
+          ctx.moveTo(i, netY);
+          ctx.lineTo(i, netY + 15); 
+          ctx.stroke();
+      }
+    }
+
+    function drawRacket(r) {
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 2;
+
+        // Racket Head (oval)
+        ctx.beginPath();
+        ctx.ellipse(r.x + r.w/2, r.y + r.h/2, r.w/2, r.h/2, 0, 0, Math.PI * 2);
+        ctx.fillStyle = (r === player) ? "#ff85a2" : "#444"; 
+        ctx.fill();
+        ctx.stroke();
+
+        // Handle
+        ctx.fillStyle = "#666"; 
+        ctx.fillRect(r.x + r.w/2 - 2, r.y + r.h, 4, 15);
+        ctx.strokeStyle = "#333";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(r.x + r.w/2 - 2, r.y + r.h, 4, 15);
+    }
+
+    function drawShuttle() {
+      ctx.beginPath();
+      ctx.arc(shuttle.x, shuttle.y, shuttle.r, 0, Math.PI*2);
+      ctx.fillStyle = "#444";
+      ctx.fill();
+    }
+
+    function gameLoop() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      drawCourt();
+
+      drawRacket(player);
+      drawRacket(opponent);
+
+      // Move shuttle with speed and gravity effect
+      shuttle.x += shuttle.dx;
+      shuttle.y += shuttle.dy * shuttle.dir;
+
+      // Simulate arc for 2D (gravity only affects vertical speed)
+      shuttle.dy += shuttle.gravity; 
+      
+      // Apply air resistance
+      shuttle.dx *= shuttle.airResistance;
+      shuttle.dy *= shuttle.airResistance;
+
+      // Clamp speeds
+      shuttle.dx = Math.min(Math.max(shuttle.dx, -MAX_SHUTTLE_SPEED), MAX_SHUTTLE_SPEED);
+      shuttle.dy = Math.min(Math.max(shuttle.dy, -MAX_SHUTTLE_DY_BASE), MAX_SHUTTLE_DY_BASE);
+
+
+      // Bounce off side court boundaries (x-axis)
+      if (shuttle.x - shuttle.r < COURT_LEFT_X || shuttle.x + shuttle.r > COURT_RIGHT_X) {
+        shuttle.dx *= -1;
+        if (shuttle.x - shuttle.r < COURT_LEFT_X) shuttle.x = COURT_LEFT_X + shuttle.r;
+        if (shuttle.x + shuttle.r > COURT_RIGHT_X) shuttle.x = COURT_RIGHT_X - shuttle.r;
+      }
+
+      // --- Opponent Movement Logic ---
+if (shuttle.dir === -1 && shuttle.y < netY) { // Shuttle moving towards opponent's side
+    let targetX = shuttle.x - opponent.w / 2;
+
+    // Default speed
+    let moveSpeed = 0.18;
+
+    // Apply "slow reaction" 30% chance
+    if (!shuttle.slowCheckDone) {
+        shuttle.slowCheckDone = true;
+        shuttle.slowMode = (Math.random() < 0.4); // 30% chance
+    }
+    if (shuttle.slowMode) {
+        moveSpeed = 0.08; // Slower movement
+    }
+
+    targetX += Math.sin(Date.now() / 300) * 18; // Oscillation for realism
+    opponent.x += (targetX - opponent.x) * moveSpeed;
+
+    // Keep opponent inside court
+    if (opponent.x < COURT_LEFT_X) opponent.x = COURT_LEFT_X;
+    if (opponent.x > COURT_RIGHT_X - opponent.w) opponent.x = COURT_RIGHT_X - opponent.w;
+}
+
+
+      let didHitThisFrame = false;
+
+      // Player hit detection
+      if (shuttle.dir===1 && shuttle.y+shuttle.r >= player.y &&
+          shuttle.x > player.x && shuttle.x < player.x+player.w && shuttle.lastHitBy !== 1) { 
+        
+        let hitPos = (shuttle.x - (player.x+player.w/2)) / (player.w/2);
+        
+        // Smash detection (shuttle falling fast and hit high on racket)
+        let isSmash = (shuttle.dy > 5 && shuttle.y < player.y + player.h/2 && Math.abs(hitPos) < 0.6);
+
+        if (isSmash) {
+            shuttle.dy = 10; // Powerful downward smash 
+            shuttle.dx = hitPos * 9; // More horizontal power
+            shuttle.dir = -1; // Send to opponent
+            smashPoints++;
+            document.getElementById("gameMessage").innerText = `SMASH! 💥 (Smashes: ${smashPoints}/3)`;
+        } else {
+            shuttle.dy = 7; // Normal clear/lob upwards
+            shuttle.dx = hitPos * 7;
+            shuttle.dir = -1; // Send to opponent
+            document.getElementById("gameMessage").innerText = `Nice shot! (Smashes: ${smashPoints}/3)`;
+        }
+        shuttle.lastHitBy = 1;
+        didHitThisFrame = true;
+      }
+
+      // Opponent hit detection
+      if (!didHitThisFrame && shuttle.dir===-1 && shuttle.y-shuttle.r <= opponent.y+opponent.h &&
+          shuttle.x > opponent.x && shuttle.x < opponent.x+opponent.w && shuttle.lastHitBy !== -1) { 
+        
+        let hitPos = (shuttle.x - (opponent.x+opponent.w/2)) / (opponent.w/2);
+        
+        // Opponent's simple AI hit logic
+        let oppHitStrengthY = 7; // Default clear strength 
+        let oppHitStrengthX = 7; 
+
+        // Small chance for opponent to "smash" if shuttle is falling and not too high
+        if (shuttle.dy > 5 && shuttle.y > opponent.y + opponent.h/2 && Math.random() < 0.4) { 
+            oppHitStrengthY = 9; // Smash strength 
+            oppHitStrengthX = 8; 
+        }
+        shuttle.dy = oppHitStrengthY;
+        shuttle.dx = hitPos * oppHitStrengthX;
+        shuttle.dir = 1; // Send to player
+        shuttle.lastHitBy = -1;
+        didHitThisFrame = true;
+      }
+
+      // --- Removed Net Collision Logic ---
+      // The net will now act purely as a background, shuttle passes through it.
+      
+      // Misses / Out of Bounds (Y-axis check)
+      if (shuttle.y + shuttle.r > COURT_BOTTOM_Y) { // Hit player's ground or went past
+        opponentScore++;
+        resetRally("Point for Opponent! 😢");
+      } else if (shuttle.y - shuttle.r < COURT_TOP_Y) { // Hit opponent's ground or went past
+        score++;
+        if(smashPoints >= 3) {
+          document.getElementById("gameMessage").innerText = "You win the match with smashes! 🎉";
+          rally=false;
+          setTimeout(()=>showSection("reveal"),1500);
+          return;
+        }
+        resetRally("Point for you! 💖");
+      }
+
+      drawShuttle();
+      if(rally) requestAnimationFrame(gameLoop);
+    }
+
+    function resetRally(msg) {
+      document.getElementById("gameMessage").innerText = msg + 
+        ` (Score: You ${score} - Opp ${opponentScore} | Smashes: ${smashPoints}/3)`;
+      rally=false;
+      // Reset positions to neutral after a point
+      player.x = canvas.width/2 - player.w/2;
+      opponent.x = canvas.width/2 - opponent.w/2;
+      setTimeout(startRally,1500);
+      shuttle.slowCheckDone = false;
+      shuttle.slowMode = false;
+
+    }
+
+    function startRally() {
+      shuttle.x = canvas.width/2 + (Math.random() * 40 - 20);
+      shuttle.y = player.y - 20; // Start slightly above player's racket
+      shuttle.dx = 4 * (Math.random() < 0.5 ? 1 : -1); // More random initial horizontal direction
+      shuttle.dy = 7; // Initial upward speed for serve (faster)
+      shuttle.dir = -1; // Player serves towards opponent (up on screen)
+      shuttle.lastHitBy = 1; // Player is serving
+      rally=true;
+      document.getElementById("gameMessage").innerText = "";
+      gameLoop();
+    }
+
+    // Override the showSection function to start the game
+    const oldShowSection = showSection;
+    showSection = function(id) {
+      oldShowSection(id);
+      if(id==="box") {
+        score=0; opponentScore=0; smashPoints=0;
+        document.getElementById("gameMessage").innerText = "You serve! Drag racket to hit. Score 3 smash points! 💖";
+        setTimeout(startRally, 2500);
+      }
+    };
   </script>
 </body>
 </html>
