@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Glowing Tulips in Pink Glass Box</title>
+  <style>
+    body {
+      background: radial-gradient(circle at center, #ffe6f0, #ffcce0);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      perspective: 1200px;
+      font-family: sans-serif;
+    }
+
+    .scene {
+      width: 350px;
+      height: 350px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: spin 25s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+
+    /* Pink Glass Box Faces */
+    .face {
+      position: absolute;
+      width: 350px;
+      height: 350px;
+      background: rgba(255, 182, 193, 0.25); /* soft pink glass */
+      border: 2px solid rgba(255, 182, 193, 0.5);
+      backdrop-filter: blur(6px);
+      transform-style: preserve-3d;
+    }
+
+    .front  { transform: translateZ(175px); }
+    .back   { transform: rotateY(180deg) translateZ(175px); }
+    .right  { transform: rotateY(90deg) translateZ(175px); }
+    .left   { transform: rotateY(-90deg) translateZ(175px); }
+    .top    { transform: rotateX(90deg) translateZ(175px); }
+    .bottom { transform: rotateX(-90deg) translateZ(175px); }
+
+    /* Tulips Group */
+    .tulips {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    .tulip {
+      position: absolute;
+      width: 6px;
+      height: 80px;
+      background: green;
+      border-radius: 3px;
+      transform-origin: bottom center;
+      animation: sway 3s ease-in-out infinite alternate;
+    }
+
+    .tulip::after {
+      content: "";
+      position: absolute;
+      top: -25px;
+      left: -10px;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: pink;
+      box-shadow: 0 0 15px rgba(255, 150, 200, 0.8),
+                  0 0 30px rgba(255, 100, 200, 0.5);
+      filter: blur(1px);
+    }
+
+    /* Swaying animation */
+    @keyframes sway {
+      from { transform: rotateZ(-4deg); }
+      to   { transform: rotateZ(4deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="scene">
+    <!-- Glass box faces -->
+    <div class="face front"></div>
+    <div class="face back"></div>
+    <div class="face right"></div>
+    <div class="face left"></div>
+    <div class="face top"></div>
+    <div class="face bottom"></div>
+
+    <!-- Tulips inside -->
+    <div class="tulips" id="tulipField"></div>
+  </div>
+
+  <script>
+    const tulipField = document.getElementById("tulipField");
+
+    const colors = [
+      "rgba(255, 182, 193, 1)", // pink
+      "rgba(255, 255, 200, 1)", // yellow
+      "rgba(200, 150, 255, 1)", // purple
+      "rgba(255, 255, 255, 1)"  // white
+    ];
+
+    // Create 60 glowing tulips randomly inside the box
+    for (let i = 0; i < 60; i++) {
+      const tulip = document.createElement("div");
+      tulip.classList.add("tulip");
+
+      tulip.style.left = `${Math.random() * 300 + 20}px`;
+      tulip.style.bottom = `${20 + Math.random() * 50}px`;
+
+      // Glow color
+      const flower = document.createElement("style");
+      const color = colors[Math.floor(Math.random() * colors.length)];
+      tulip.style.setProperty("--glow-color", color);
+
+      // Override flower color & glow
+      tulip.style.setProperty("--flower-color", color);
+      tulip.style.animationDelay = `${Math.random() * 2}s`;
+      tulip.style.animationDuration = `${2.5 + Math.random()}s`;
+
+      // Customize flower head
+      tulip.style.setProperty("--flower-color", color);
+      tulipField.appendChild(tulip);
+
+      // Update its ::after with random glow color
+      const flowerHead = document.createElement("style");
+      tulip.dataset.color = color;
+      tulip.style.setProperty("--flower-color", color);
+
+      // Inject glow via CSS variable
+      tulip.addEventListener("mouseenter", () => {
+        tulip.style.transform = "scale(1.2)";
+      });
+      tulip.addEventListener("mouseleave", () => {
+        tulip.style.transform = "scale(1)";
+      });
+
+      // Apply to ::after
+      tulip.style.setProperty("--flower-shadow",
+        `0 0 15px ${color}, 0 0 30px ${color}`);
+      tulip.style.setProperty("--flower-color", color);
+
+      tulip.style.setProperty("position", "absolute");
+      tulip.style.setProperty("height", "80px");
+      tulip.style.setProperty("width", "6px");
+
+      // Change ::after dynamically
+      tulip.style.setProperty("content", "''");
+      tulip.style.setProperty("display", "block");
+      tulip.style.setProperty("border-radius", "50%");
+      tulip.style.setProperty("background", color);
+      tulip.style.setProperty("box-shadow", `0 0 15px ${color}, 0 0 30px ${color}`);
+    }
+  </script>
+</body>
+</html>
