@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Colai's day 💖</title>
+  <title>For My Love 💖</title>
   <style>
     body {
       margin: 0;
@@ -72,22 +72,22 @@
       box-shadow: 0px 0px 12px rgba(0,0,0,0.15);
     }
 
-    /* --- New Styles for Glass Box and Tulips --- */
+    /* --- Styles for Glass Box and Tulips --- */
     .glass-box-container {
       width: 200px; /* Width of the entire 3D scene container */
       height: 200px; /* Height of the entire 3D scene container */
       perspective: 800px; /* Adds 3D perspective depth */
-      margin: 40px auto 20px auto; /* Position below gallery */
-      position: relative; /* For z-index if needed */
-      z-index: 10; /* Ensure it's above other elements if overlaps */
+      margin: 40px auto 20px auto; /* Position below content */
+      position: relative; 
+      z-index: 10; 
     }
 
     .glass-box {
       width: 100%;
       height: 100%;
       position: relative;
-      transform-style: preserve-3d; /* Children participate in 3D scene */
-      animation: rotateBox 15s infinite linear; /* Horizontal rotation animation */
+      transform-style: preserve-3d; 
+      animation: rotateBox 15s infinite linear; 
     }
 
     @keyframes rotateBox {
@@ -97,20 +97,29 @@
 
     .face {
       position: absolute;
-      width: 200px; /* Size of each face */
-      height: 200px; /* Size of each face */
-      background: rgba(255, 255, 255, 0.4); /* Increased transparency for better visibility */
-      border: 1px solid rgba(255, 192, 203, 0.8); /* Stronger border for definition */
-      box-shadow: 0 0 10px rgba(255, 192, 203, 0.3); /* Soft shadow for depth */
-      box-sizing: border-box; /* Include padding and border in width/height */
-      display: flex; /* For centering content within faces */
+      width: 200px; 
+      height: 200px; 
+      background: rgba(120, 120, 120, 0.653); /* Increased transparency for better visibility with glow */
+      border: 1px solid rgba(255, 192, 203, 0.8); 
+      box-sizing: border-box; 
+      display: flex; 
       justify-content: center;
       align-items: center;
-      backface-visibility: hidden; /* Hide back faces when looking through */
+      backface-visibility: hidden; 
+
+      /* Base shadow + animated glow for the glass itself */
+      box-shadow: 0 0 10px rgba(255, 192, 203, 0.3), /* Subtle inner shadow */
+                  0 0 15px rgba(255, 133, 162, 0.5); /* Base glow */
+      animation: glassPulseGlow 2s infinite alternate; /* Apply animation for glass glow */
+    }
+
+    /* Keyframes for the glass pulsing glow */
+    @keyframes glassPulseGlow {
+      from { box-shadow: 0 0 10px rgba(255, 192, 203, 0.3), 0 0 15px rgba(255, 133, 162, 0.5); }
+      to { box-shadow: 0 0 15px rgba(255, 192, 203, 0.6), 0 0 25px rgba(255, 133, 162, 0.8); }
     }
 
     /* Positioning each face for a 200px cube centered at origin */
-    /* translateZ(100px) moves each face +/- half the cube's dimension along its local Z-axis */
     .face.front { transform: rotateY(0deg) translateZ(100px); }
     .face.back { transform: rotateY(180deg) translateZ(100px); }
     .face.left { transform: rotateY(-90deg) translateZ(100px); }
@@ -122,25 +131,23 @@
       width: 100%;
       height: 100%;
       display: flex;
-      flex-wrap: wrap; /* Allow tulips to wrap into a grid */
+      flex-wrap: wrap; 
       justify-content: center;
-      align-content: center; /* Vertically center content if there are fewer rows */
-      gap: 8px; /* Spacing between tulips */
+      align-content: center; 
+      gap: 8px; 
       padding: 10px;
       box-sizing: border-box;
-      /* Background for the "field" itself */
       background: radial-gradient(circle at center, #f0f0f0 0%, #d8d8d8 100%);
-      border-radius: 10px; /* Soften corners of the field area */
-      overflow: hidden; /* Hide any overflow */
+      border-radius: 10px; 
+      overflow: hidden; 
     }
 
     .tulip-emoji {
-      font-size: 28px; /* Size of the tulip emojis */
-      /* Glowing effect using text-shadow */
-      text-shadow: 0 0 8px #ff85a2, /* Pink glow */
-                   0 0 15px #ff4c78; /* Stronger pink glow */
-      animation: pulseGlow 2s infinite alternate; /* Gentle pulsing glow */
-      user-select: none; /* Prevent selection of emojis */
+      font-size: 28px; 
+      text-shadow: 0 0 8px #ff85a2, 
+                   0 0 15px #ff4c78; 
+      animation: pulseGlow 2s infinite alternate; 
+      user-select: none; 
     }
 
     @keyframes pulseGlow {
@@ -148,6 +155,7 @@
       to { text-shadow: 0 0 12px #ff85a2, 0 0 20px #ff4c78; }
     }
 
+    /* Original gallery styles (kept but not used in reveal section HTML anymore) */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
@@ -180,7 +188,7 @@
   <!-- Intro -->
   <div id="intro" class="section">
     <img src="images/colai.PNG" class="her-photo show" id="photo-intro" alt="Her Photo">
-    <h1>Hi crush :></h1>
+    <h1>Hi, my Princess :></h1>
     <p>Scan complete ✅ <br>Welcome to your surprise adventure!</p>
     <div class="emoji-decor">🌷🌹🍦🍟🏸</div>
     <button onclick="nextWithPhoto('story1','photo-story1')">Start</button>
@@ -220,18 +228,11 @@
     <p id="gameMessage" style="margin-top:10px;color:#ff4c78;font-weight:bold;"></p>
   </div>
 
-  <!-- Reveal with Photo Gallery -->
+  <!-- Reveal with Photo Gallery (now just glass box) -->
   <div id="reveal" class="section hidden">
     <div class="reveal">
       <h2>Surprise! 💖</h2>
-      <p style="font-size:18px;">Here’s a little gallery of “us” 📸💌</p>
-      <div class="gallery">
-        <img src="photo1.jpg" alt="Memory 1">
-        <img src="photo2.jpg" alt="Memory 2">
-        <img src="photo3.jpg" alt="Memory 3">
-        <img src="photo4.jpg" alt="Memory 4">
-      </div>
-      <p style="margin-top:20px;">✨ Just like the real gray box you’ll open, this one is filled with love (and tulips 🌷 + lights) ✨</p>
+      <p style="font-size:18px;">✨ Nice game po! Dahil jan, here's a special gift for you! ✨</p>
 
       <!-- NEW CONTENT FOR GLASS BOX AND TULIPS -->
       <div class="glass-box-container">
@@ -430,28 +431,28 @@
       }
 
       // --- Opponent Movement Logic ---
-if (shuttle.dir === -1 && shuttle.y < netY) { // Shuttle moving towards opponent's side
-    let targetX = shuttle.x - opponent.w / 2;
+      if (shuttle.dir === -1 && shuttle.y < netY) { // Shuttle moving towards opponent's side
+          let targetX = shuttle.x - opponent.w / 2;
 
-    // Default speed
-    let moveSpeed = 0.18;
+          // Default speed
+          let moveSpeed = 0.18;
 
-    // Apply "slow reaction" 30% chance
-    if (!shuttle.slowCheckDone) {
-        shuttle.slowCheckDone = true;
-        shuttle.slowMode = (Math.random() < 0.4); // 30% chance
-    }
-    if (shuttle.slowMode) {
-        moveSpeed = 0.08; // Slower movement
-    }
+          // Apply "slow reaction" 45% chance
+          if (!shuttle.slowCheckDone) {
+              shuttle.slowCheckDone = true;
+              shuttle.slowMode = (Math.random() < 0.45); // 45% chance
+          }
+          if (shuttle.slowMode) {
+              moveSpeed = 0.08; // Slower movement
+          }
 
-    targetX += Math.sin(Date.now() / 300) * 18; // Oscillation for realism
-    opponent.x += (targetX - opponent.x) * moveSpeed;
+          targetX += Math.sin(Date.now() / 300) * 18; // Oscillation for realism
+          opponent.x += (targetX - opponent.x) * moveSpeed;
 
-    // Keep opponent inside court
-    if (opponent.x < COURT_LEFT_X) opponent.x = COURT_LEFT_X;
-    if (opponent.x > COURT_RIGHT_X - opponent.w) opponent.x = COURT_RIGHT_X - opponent.w;
-}
+          // Keep opponent inside court
+          if (opponent.x < COURT_LEFT_X) opponent.x = COURT_LEFT_X;
+          if (opponent.x > COURT_RIGHT_X - opponent.w) opponent.x = COURT_RIGHT_X - opponent.w;
+      }
 
 
       let didHitThisFrame = false;
@@ -563,4 +564,3 @@ if (shuttle.dir === -1 && shuttle.y < netY) { // Shuttle moving towards opponent
   </script>
 </body>
 </html>
-
