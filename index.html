@@ -440,7 +440,7 @@
           // Apply "slow reaction" 45% chance
           if (!shuttle.slowCheckDone) {
               shuttle.slowCheckDone = true;
-              shuttle.slowMode = (Math.random() < 0.45); // 45% chance
+              shuttle.slowMode = (Math.random() < 0.60); // 45% chance
           }
           if (shuttle.slowMode) {
               moveSpeed = 0.08; // Slower movement
@@ -564,5 +564,6 @@
   </script>
 </body>
 </html>
+
 
 
